@@ -1,4 +1,5 @@
     module softLeptonJetTags = SoftLepton {
+      string leptonTagger       = "softLeptonBTagger"
       string jetTracks          = "jetTracksAssociator"
       string primaryVertex      = "offlinePrimaryVerticesFromCTFTracks"
       string leptons            = "globalMuons"
