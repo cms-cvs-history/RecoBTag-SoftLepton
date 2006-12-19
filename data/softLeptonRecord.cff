@@ -1,0 +1,12 @@
+    # SoftLepton concrete algorithm
+    es_source SoftLeptonBTagRecord = EmptyESSource {
+        string recordName = "SoftLeptonBTagRecord"
+        vuint32 firstValid = { 1 }
+        bool iovIsRunNotTime = true
+    }
+    es_module muonTaggerESProducer     = MuonTaggerESProducer {
+        string ComponentName = "softMuonBTagger"
+    }
+    es_module muonTaggerNoIPESProducer = MuonTaggerNoIPESProducer {
+        string ComponentName = "softMuonBTaggerNoIP"
+    }

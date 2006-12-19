@@ -1,3 +1,5 @@
 include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 include "TrackingTools/TransientTrack/data/TransientTrackBuilder.cfi"
+
+include "RecoBTag/SoftLepton/data/softLeptonRecord.cff"
 include "RecoBTag/SoftLepton/data/softLepton.cfi"
