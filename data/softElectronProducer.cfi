@@ -1,0 +1,17 @@
+
+    module softElectrons = SoftElectronProducer {
+      InputTag TrackTag = ctfWithMaterialTracks
+  
+      InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
+      InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
+
+      InputTag EBRecHitCollectionLabel = ecalRecHit:EcalRecHitsEB
+      InputTag EERecHitCollectionLabel = ecalRecHit:EcalRecHitsEE
+
+      double HOverEConeSize = 0.3
+
+      double DiscriminatorCut = 0.9
+      
+      string ElectronCollection = "btagSoftElectrons"
+
+    }
