@@ -7,6 +7,9 @@
     es_module leptonTaggerDistanceESProducer = LeptonTaggerDistanceESProducer {
         string ComponentName = "softLeptonBTaggerByDistance"
     }
+    es_module electronTaggerESProducer = ElectronTaggerESProducer {
+        string ComponentName = "softElectronBTagger"
+    }
     es_module muonTaggerESProducer = MuonTaggerESProducer {
         string ComponentName = "softMuonBTagger"
     }
