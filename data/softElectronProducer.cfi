@@ -1,5 +1,5 @@
 
-    module softElectrons = SoftElectronProducer {
+    module btagSoftElectrons = SoftElectronProducer {
       InputTag TrackTag = ctfWithMaterialTracks
   
       InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
