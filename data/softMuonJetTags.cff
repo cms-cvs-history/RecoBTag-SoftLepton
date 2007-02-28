@@ -1,6 +1,0 @@
-include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
-include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cfi"
-include "TrackingTools/TransientTrack/data/TransientTrackBuilder.cfi"
-
-include "RecoBTag/SoftLepton/data/softLeptonRecord.cff"
-include "RecoBTag/SoftLepton/data/softMuonJetTags.cfi"
