@@ -1,5 +1,6 @@
     module btagSoftElectrons = SoftElectronProducer {
       InputTag TrackTag = ctfWithMaterialTracks
+      InputTag HBHERecHitTag = hbhereco
       InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
       InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
       InputTag EBRecHitCollectionLabel = ecalRecHit:EcalRecHitsEB
