@@ -1,0 +1,12 @@
+<use name=DataFormats/TrackReco>
+<use name=FWCore/Framework>
+<use name=Foundation/PluginManager>
+<use name=MagneticField/Engine>
+<use name=MagneticField/Records>
+<use name=SimDataFormats/TrackingAnalysis>
+<use name=SimTracker/Records>
+<use name=SimTracker/TrackAssociation>
+
+<library file="testLeptonAssociator.cc" name=testLeptonAssociator>
+  <flags  SEAL_PLUGIN_NAME="testLeptonAssociator">
+</library>
