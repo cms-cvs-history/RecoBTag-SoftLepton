@@ -6,6 +6,7 @@
 <use name=SimDataFormats/TrackingAnalysis>
 <use name=SimTracker/Records>
 <use name=SimTracker/TrackAssociation>
+<use name=boost>
 
 <library file="testLeptonAssociator.cc" name=testLeptonAssociator>
   <flags  SEAL_PLUGIN_NAME="testLeptonAssociator">
