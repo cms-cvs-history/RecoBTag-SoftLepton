@@ -9,5 +9,5 @@
 <use name=boost>
 
 <library file="testLeptonAssociator.cc" name=testLeptonAssociator>
-  <flags  SEAL_PLUGIN_NAME="testLeptonAssociator">
+  <flags EDM_PLUGIN=1>
 </library>
