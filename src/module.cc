@@ -8,6 +8,7 @@
 #include "RecoBTag/SoftLepton/interface/MuonTaggerESProducer.h"
 #include "RecoBTag/SoftLepton/interface/MuonTaggerNoIPESProducer.h"
 #include "RecoBTag/SoftLepton/interface/LeptonTaggerDistanceESProducer.h"
+#include "RecoBTag/SoftLepton/interface/LeptonTaggerByPtESProducer.h"
 
 DEFINE_SEAL_MODULE();
 DEFINE_ANOTHER_FWK_MODULE(SoftLepton);
@@ -16,3 +17,4 @@ DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(ElectronTaggerESProducer);
 DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(MuonTaggerESProducer);
 DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(MuonTaggerNoIPESProducer);
 DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerDistanceESProducer);
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerByPtESProducer);
