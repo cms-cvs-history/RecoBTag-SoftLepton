@@ -14,8 +14,18 @@
 DEFINE_SEAL_MODULE();
 DEFINE_ANOTHER_FWK_MODULE(SoftLepton);
 DEFINE_ANOTHER_FWK_MODULE(SoftElectronProducer);
-DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerESProducer<ElectronTagger>);
-DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerESProducer<MuonTagger>);
-DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerESProducer<MuonTaggerNoIP>);
-DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerESProducer<LeptonTaggerDistance>);
-DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerESProducer<LeptonTaggerByPt>);
+
+typedef LeptonTaggerESProducer<ElectronTagger>       ElectronTaggerESProducer;
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(ElectronTaggerESProducer);
+
+typedef LeptonTaggerESProducer<MuonTagger>           MuonTaggerESProducer;
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(MuonTaggerESProducer);
+
+typedef LeptonTaggerESProducer<MuonTaggerNoIP>       MuonTaggerNoIPESProducer;
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(MuonTaggerNoIPESProducer);
+
+typedef LeptonTaggerESProducer<LeptonTaggerDistance> LeptonTaggerDistanceESProducer;
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerDistanceESProducer);
+
+typedef LeptonTaggerESProducer<LeptonTaggerByPt>     LeptonTaggerByPtESProducer;
+DEFINE_ANOTHER_FWK_EVENTSETUP_MODULE(LeptonTaggerByPtESProducer);
