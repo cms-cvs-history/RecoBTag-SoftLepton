@@ -1,6 +1,7 @@
 #ifndef RecoBTag_SoftLepton_LeptonTaggerESProducer_h
 #define RecoBTag_SoftLepton_LeptonTaggerESProducer_h
 
+#include <string>
 #include <boost/shared_ptr.hpp>
 
 #include "FWCore/Framework/interface/ESProducer.h"
@@ -12,8 +13,7 @@ template <typename Tagger>
 class LeptonTaggerESProducer: public edm::ESProducer {
 public:
   LeptonTaggerESProducer(const edm::ParameterSet & pset) : m_pset(pset) {
-    std::string name = m_pset.getParameter<std::string>("ComponentName");
-    setWhatProduced(this, name);
+    setWhatProduced(this, m_pset.retrieve("ComponentName").getString());
 
     m_softLeptonTagger = boost::shared_ptr<LeptonTaggerBase>(new Tagger());
   }
