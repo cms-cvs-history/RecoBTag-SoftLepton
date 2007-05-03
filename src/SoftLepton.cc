@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.15 2007/03/06 17:49:25 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.14.2.1 2007/04/20 09:13:32 fwyzard Exp $
 //
 
 
@@ -78,7 +78,8 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   iEvent.getByLabel(m_jetTracksAssociator, jetTracksAssociation);
 
   Handle<reco::VertexCollection> primaryVertex;
-  iEvent.getByLabel(m_primaryVertexProducer, primaryVertex);
+  if (m_primaryVertexProducer != "none")
+    iEvent.getByLabel(m_primaryVertexProducer, primaryVertex);
 
   TrackRefVector leptons;
   // try to access the input collection as a collection of Electons, Muons or Tracks
@@ -123,7 +124,7 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   std::auto_ptr<reco::SoftLeptonTagInfoCollection> extCollection(  new reco::SoftLeptonTagInfoCollection() );
 
   reco::Vertex pv;
-  if (primaryVertex->size()) {
+  if (primaryVertex.isValid() && primaryVertex->size()) {
     PrimaryVertexSorter pvs;
     pv = pvs.sortedList(*(primaryVertex.product())).front();
   } else {
