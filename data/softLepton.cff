@@ -2,6 +2,7 @@ include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cfi"
 include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
 include "Geometry/CaloEventSetup/data/CaloTopology.cfi"
+include "Geometry/MuonNumbering/data/muonNumberingInitialization.cfi"
 include "TrackingTools/TransientTrack/data/TransientTrackBuilder.cfi"
 
 include "RecoBTag/SoftLepton/data/softLeptonRecord.cff"
