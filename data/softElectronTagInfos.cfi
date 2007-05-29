@@ -1,8 +1,8 @@
 # SoftLeptonTagInfo producer for tagging caloJets with dedicated "soft" electrons
 module softElectronTagInfos = SoftLepton {
-    string jets           = iterativeCone5CaloJets
-    string leptons        = btagSoftElectrons
-    string primaryVertex  = offlinePrimaryVerticesFromCTFTracks
+    InputTag jets           = iterativeCone5CaloJets
+    InputTag leptons        = btagSoftElectrons
+    InputTag primaryVertex  = offlinePrimaryVerticesFromCTFTracks
  
     PSet algorithmConfiguration = { 
         double deltaRCut        = 0.4
