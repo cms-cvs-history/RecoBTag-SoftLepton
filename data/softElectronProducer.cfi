@@ -1,14 +1,15 @@
-    module btagSoftElectrons = SoftElectronProducer {
-      InputTag TrackTag = ctfWithMaterialTracks
-      InputTag HBHERecHitTag = hbhereco
-      InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
-      InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
-      include "TrackingTools/TrackAssociator/data/default.cfi"
+# identify electrons from the ECAL energy deposits associate to the tracks
+module btagSoftElectrons = SoftElectronProducer {
+    InputTag TrackTag = ctfWithMaterialTracks
+    InputTag HBHERecHitTag = hbhereco
+    InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
+    InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
+    include "TrackingTools/TrackAssociator/data/default.cfi"
 
-      double HOverEConeSize = 0.3
-      double DiscriminatorCut = 0.9
-    }
-    replace btagSoftElectrons.TrackAssociatorParameters.useEcal = true
-    replace btagSoftElectrons.TrackAssociatorParameters.useHcal = false
-    replace btagSoftElectrons.TrackAssociatorParameters.useHO   = false
-    replace btagSoftElectrons.TrackAssociatorParameters.useMuon = false
+    double HOverEConeSize = 0.3
+    double DiscriminatorCut = 0.9
+}
+replace btagSoftElectrons.TrackAssociatorParameters.useEcal = true
+replace btagSoftElectrons.TrackAssociatorParameters.useHcal = false
+replace btagSoftElectrons.TrackAssociatorParameters.useHO   = false
+replace btagSoftElectrons.TrackAssociatorParameters.useMuon = false

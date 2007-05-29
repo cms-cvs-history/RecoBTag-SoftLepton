@@ -1,0 +1,12 @@
+# SoftLeptonTagInfo producer for tagging caloJets with global muons 
+module softMuonTagInfo = SoftLepton {
+    string jets           = iterativeCone5CaloJets
+    string leptons        = btagSoftElectrons
+    string primaryVertex  = offlinePrimaryVerticesFromCTFTracks
+ 
+    PSet algorithmConfiguration = { 
+        double deltaRCut        = 0.4
+        uint32 refineJetAxis    = 0         # use calorimetric jet direction by default
+        bool   usePrimaryVertex = true      # use primary vertex to compute the impact parameter of the leptons
+    }
+}
