@@ -1,0 +1,6 @@
+es_module softLeptonByPt = LeptonTaggerByPtESProducer {
+    string ComponentName = "softLeptonByPt"
+    
+    PSet JetTagComputerPSet = {
+    }
+}
