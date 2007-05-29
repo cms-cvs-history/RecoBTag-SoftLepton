@@ -1,5 +1,5 @@
 # SoftLeptonTagInfo producer for tagging caloJets with global muons 
-module softMuonTagInfo = SoftLepton {
+module softMuonTagInfos = SoftLepton {
     string jets           = iterativeCone5CaloJets
     string leptons        = globalMuons
     string primaryVertex  = offlinePrimaryVerticesFromCTFTracks
