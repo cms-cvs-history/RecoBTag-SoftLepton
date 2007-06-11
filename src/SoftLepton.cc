@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.24 2007/06/05 09:16:48 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.20 2007/05/29 22:00:10 fwyzard Exp $
 //
 
 
@@ -38,6 +38,8 @@
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
 #include "RecoVertex/PrimaryVertexProducer/interface/PrimaryVertexSorter.h"
+#include "RecoBTau/JetTagComputer/interface/JetTagComputer.h"
+#include "RecoBTau/JetTagComputer/interface/JetTagComputerRecord.h"
 #include "RecoBTag/BTagTools/interface/SignedImpactParameter3D.h"
 #include "RecoBTag/SoftLepton/interface/SoftLepton.h"
 
@@ -69,30 +71,17 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
 
   // input objects
 
-  // input jets (and possibly tracks)
+  // input jets
   std::vector<edm::RefToBase<reco::Jet> > jets;
-  std::vector<reco::TrackRefVector>       tracks;
   try {
-    Handle<reco::JetTracksAssociationCollection> h_jtas;
-    iEvent.getByLabel(m_jets, h_jtas);
-
-    unsigned int size = h_jtas->size();
-    jets.resize(size);
-    tracks.resize(size);
-    for (unsigned int i = 0; i < size; ++i) {
-      jets[i]   = (*h_jtas)[i].first;
-      tracks[i] = (*h_jtas)[i].second;
-    }
-  }
-  catch(edm::Exception e) {
     Handle<reco::CaloJetCollection> h_jets;
     iEvent.getByLabel(m_jets, h_jets);
 
-    unsigned int size = h_jets->size();
-    jets.resize(size);
-    tracks.resize(size);
     for (unsigned int i = 0; i < h_jets->size(); i++)
-      jets[i] = edm::RefToBase<reco::Jet>( reco::CaloJetRef(h_jets, i) );
+      jets.push_back( edm::RefToBase<reco::Jet>( reco::CaloJetRef(h_jets, i) ) );
+  }
+  catch(edm::Exception e) {
+    throw e;
   }
   
   // input primary vetex (optional, can be "none")
@@ -110,8 +99,8 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
 
   // input leptons (can be of different types)
   reco::TrackRefVector leptons;
-  // try to access the input collection as a collection of Electrons, Muons or Tracks
-  // FIXME: migrate to getMany() as it becomes available
+  // try to access the input collection as a collection of Electons, Muons or Tracks
+  // FIXME: it would be nice not to have to rely on exceptions
   try {
     Handle<reco::ElectronCollection> h_electrons;
     iEvent.getByLabel(m_leptons, h_electrons);
@@ -155,7 +144,11 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   std::cerr << "Found " << jets.size() << " jets:" << std::endl;
   #endif // DEBUG
   for (unsigned int i = 0; i < jets.size(); ++i) {
-    reco::SoftLeptonTagInfo result = m_algo.tag( jets[i], tracks[i], leptons, vertex );
+    reco::SoftLeptonTagInfo result = m_algo.tag( jets[i], reco::TrackRefVector(), leptons, vertex );
+    #ifdef DEBUG
+//    std::cerr << "  Jet " << std::setw(2) << i << " has " << std::setw(2) << result.first.tracks().size() << " tracks and " << std::setw(2) << result.second.leptons() << " leptons" << std::endl;
+  //  std::cerr << "  Tagger result: " << result.first.discriminator() << endl;
+    #endif // DEBUG
     outputCollection->push_back( result );
   }
 
@@ -174,7 +167,5 @@ SoftLepton::beginJob(const edm::EventSetup& iSetup) {
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 SoftLepton::endJob(void) {
-  // allow cleaning up the shared pointer
-  m_algo.setTransientTrackBuilder( NULL );
 }
 
