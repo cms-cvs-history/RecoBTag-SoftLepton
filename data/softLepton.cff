@@ -5,6 +5,8 @@ include "Geometry/CaloEventSetup/data/CaloTopology.cfi"
 include "Geometry/MuonNumbering/data/muonNumberingInitialization.cfi"
 include "TrackingTools/TransientTrack/data/TransientTrackBuilder.cfi"
 
+include "RecoBTau/JetTagProducer/data/jetTagRecord.cfi"
+
 include "RecoBTag/SoftLepton/data/btagSoftElectrons.cfi"
 include "RecoBTag/SoftLepton/data/softElectronTagInfos.cfi"
 include "RecoBTag/SoftLepton/data/softElectronES.cfi"
