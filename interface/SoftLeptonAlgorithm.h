@@ -19,8 +19,6 @@ public:
   SoftLeptonAlgorithm( void ) : 
     m_transientTrackBuilder( NULL ),
     m_refineJetAxis( reco::SoftLeptonProperties::AXIS_CALORIMETRIC ),
-    m_deltaRCut( 0.7 ),
-    m_chi2Cut( 0.0 ),
     m_usePrimaryVertex( true )
   {
   }
@@ -38,16 +36,16 @@ public:
   reco::SoftLeptonTagInfo tag (
       const edm::RefToBase<reco::Jet> & jet,
       const reco::TrackRefVector      & tracks,
-      const std::vector<edm::RefToBase<reco::Track> > & leptons,
+      const reco::TrackRefVector      & leptons,
       const reco::Vertex              & primaryVertex
   ) const;
     
 protected:
   
   GlobalVector refineJetAxis (
-      const edm::RefToBase<reco::Jet>   & jet,
-      const reco::TrackRefVector        & tracks, 
-      const edm::RefToBase<reco::Track> & exclude = edm::RefToBase<reco::Track>()
+      const edm::RefToBase<reco::Jet> & jet,
+      const reco::TrackRefVector      & tracks, 
+      const reco::TrackRef            & excluded = reco::TrackRef()
   ) const;
 
   static double relativeEta(
@@ -61,8 +59,8 @@ protected:
   // algorithm configuration
   unsigned int m_refineJetAxis;
   double       m_deltaRCut;
-  double       m_chi2Cut;
-  bool         m_usePrimaryVertex;
+  bool         m_usePrimaryVertex; 
+    
 };
 
 #endif // RecoBTag_SoftLepton_SoftLeptonAlgorithm_h
