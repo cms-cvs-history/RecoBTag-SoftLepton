@@ -14,7 +14,6 @@
 
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
-#include "RecoBTag/BTagTools/interface/SignedTransverseImpactParameter.h"
 #include "RecoBTag/BTagTools/interface/SignedImpactParameter3D.h"
 #include "RecoBTag/SoftLepton/interface/SoftLeptonAlgorithm.h"
 
@@ -28,49 +27,52 @@ SoftLeptonAlgorithm::SoftLeptonAlgorithm( const edm::ParameterSet & iConfig ) :
     m_transientTrackBuilder( NULL ) 
 {
     m_refineJetAxis    = iConfig.getParameter<unsigned int>("refineJetAxis");
+    m_usePrimaryVertex = iConfig.getParameter<bool>("usePrimaryVertex");
     m_deltaRCut        = iConfig.getParameter<double>("deltaRCut");
-    m_chi2Cut          = iConfig.getParameter<double>("chi2Cut");
 }
   
 
 reco::SoftLeptonTagInfo SoftLeptonAlgorithm::tag (
     const edm::RefToBase<reco::Jet> & jet,
     const reco::TrackRefVector      & tracks,
-    const std::vector<edm::RefToBase<reco::Track> > & leptons,
+    const reco::TrackRefVector      & leptons,
     const reco::Vertex              & primaryVertex
 ) const {
 
-  if (m_transientTrackBuilder == NULL)
+  if (m_usePrimaryVertex && m_transientTrackBuilder == NULL)
     throw cms::Exception("Configuration") << "SoftLeptonAlgorithm: missing TransientTrack builder";
 
   SignedImpactParameter3D sip3D;
-  SignedTransverseImpactParameter sip2D;
 
   reco::SoftLeptonTagInfo info;
   info.setJetRef( jet );
   
   for (unsigned int i = 0; i < leptons.size(); i++) {
-    const edm::RefToBase<reco::Track> & lepton = leptons[i];
+    const reco::TrackRef  & lepton = leptons[i];
     const math::XYZVector & lepton_momentum = lepton->momentum();
-    if ((m_chi2Cut > 0.0) and (lepton->normalizedChi2() > m_chi2Cut))
-      continue;
 
-    const GlobalVector jetAxis = refineJetAxis( jet, tracks, lepton );
-    const math::XYZVector axis( jetAxis.x(), jetAxis.y(), jetAxis.z());
-    if (DeltaR(lepton_momentum, axis) > m_deltaRCut)
+    if (DeltaR(lepton_momentum, jet->momentum()) > m_deltaRCut)
       continue;
 
     reco::SoftLeptonProperties properties;
     properties.axisRefinement = m_refineJetAxis;
+    GlobalVector jetAxis = refineJetAxis( jet, tracks, lepton );
+    math::XYZVector axis( jetAxis.x(), jetAxis.y(), jetAxis.z());
+   
+    if (m_usePrimaryVertex) { 
+      const reco::TransientTrack transientTrack = m_transientTrackBuilder->build(&lepton);
+      properties.sip3d = sip3D.apply( transientTrack, jetAxis, primaryVertex ).second.significance();
+    } else {
+      // no primary vertex, don't compute the IP
+      properties.sip3d = 0.0;
+    }
 
-    const reco::TransientTrack transientTrack = m_transientTrackBuilder->build(*lepton);
-    properties.sip2d    = sip2D.apply( transientTrack, jetAxis, primaryVertex ).second.significance();
-    properties.sip3d    = sip3D.apply( transientTrack, jetAxis, primaryVertex ).second.significance();
     properties.deltaR   = DeltaR( lepton_momentum, axis );
     properties.ptRel    = Perp( lepton_momentum, axis );
     properties.etaRel   = relativeEta( lepton_momentum, axis );
     properties.ratio    = lepton_momentum.R() / axis.R();
     properties.ratioRel = lepton_momentum.Dot(axis) / axis.Mag2();
+    properties.tag      = 0.0;  // tags should not be in extended collections
     info.insert( lepton, properties );
   }
  
@@ -80,9 +82,9 @@ reco::SoftLeptonTagInfo SoftLeptonAlgorithm::tag (
 
 GlobalVector
 SoftLeptonAlgorithm::refineJetAxis (
-    const edm::RefToBase<reco::Jet>   & jet,
-    const reco::TrackRefVector        & tracks,
-    const edm::RefToBase<reco::Track> & exclude /* = edm::RefToBase<reco::Track>() */
+    const edm::RefToBase<reco::Jet> & jet,
+    const reco::TrackRefVector      & tracks,
+    const reco::TrackRef            & excluded /* = reco::TrackRef() */
 ) const {
   math::XYZVector axis = jet->momentum();
 
@@ -113,8 +115,8 @@ SoftLeptonAlgorithm::refineJetAxis (
     }
 
     // "remove" excluded track
-    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_AVERAGE_NOLEPTON and exclude.isNonnull()) {
-      const reco::Track & track = *exclude;
+    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_AVERAGE_NOLEPTON and excluded.isNonnull()) {
+      const reco::Track & track = *excluded;
 
       perp = track.pt();
       eta_rel = (double) track.eta() - axis.eta();
@@ -141,8 +143,8 @@ SoftLeptonAlgorithm::refineJetAxis (
     }
 
     // "remove" excluded track
-    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_SUM_NOLEPTON and exclude.isNonnull()) {
-      const reco::Track & track = *exclude;
+    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_SUM_NOLEPTON and excluded.isNonnull()) {
+      const reco::Track & track = *excluded;
       sum -= track.momentum();
     }
 
@@ -156,5 +158,5 @@ SoftLeptonAlgorithm::refineJetAxis (
 double SoftLeptonAlgorithm::relativeEta(const math::XYZVector& vector, const math::XYZVector& axis) {
   double mag = vector.R() * axis.R();
   double dot = vector.Dot(axis);
-  return -log((mag - dot)/(mag + dot)) / 2;
+  return - log((mag - dot)/(mag + dot)) / 2;
 }
