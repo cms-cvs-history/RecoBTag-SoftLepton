@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.20 2007/05/29 22:00:10 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.21 2007/05/30 07:37:38 arizzi Exp $
 //
 
 
@@ -83,16 +83,15 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   catch(edm::Exception e) {
     throw e;
   }
-  
+ 
   // input primary vetex (optional, can be "none")
   reco::Vertex vertex;
   Handle<reco::VertexCollection> h_primaryVertex;
   if (m_primaryVertex.label() != "none")
     iEvent.getByLabel(m_primaryVertex, h_primaryVertex);
 
-  if (h_primaryVertex->size()) {
-    PrimaryVertexSorter pvs;
-    vertex = pvs.sortedList(*(h_primaryVertex.product())).front();
+  if (h_primaryVertex.isValid() and h_primaryVertex->size()) {
+    vertex = h_primaryVertex->front();
   } else {
     vertex = s_nominalBeamSpot;
   }
