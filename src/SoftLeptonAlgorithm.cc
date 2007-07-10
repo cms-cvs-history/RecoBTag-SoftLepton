@@ -24,11 +24,12 @@ using namespace ROOT::Math::VectorUtil;
 
 
 SoftLeptonAlgorithm::SoftLeptonAlgorithm( const edm::ParameterSet & iConfig ) :
-    m_transientTrackBuilder( NULL ) 
+    m_transientTrackBuilder( NULL ),
+    m_refineJetAxis( iConfig.getParameter<unsigned int>("refineJetAxis") ),
+    m_deltaRCut( iConfig.getParameter<double>("leptonDeltaRCut") ),
+    m_chi2Cut( iConfig.getParameter<double>("leptonChi2Cut") ),
+    m_usePrimaryVertex( iConfig.getParameter<bool>("usePrimaryVertex") )
 {
-    m_refineJetAxis    = iConfig.getParameter<unsigned int>("refineJetAxis");
-    m_usePrimaryVertex = iConfig.getParameter<bool>("usePrimaryVertex");
-    m_deltaRCut        = iConfig.getParameter<double>("deltaRCut");
 }
   
 
@@ -50,14 +51,16 @@ reco::SoftLeptonTagInfo SoftLeptonAlgorithm::tag (
   for (unsigned int i = 0; i < leptons.size(); i++) {
     const reco::TrackRef  & lepton = leptons[i];
     const math::XYZVector & lepton_momentum = lepton->momentum();
+    if ((m_chi2Cut > 0.0) and (lepton->normalizedChi2() > m_chi2Cut))
+      continue;
 
-    if (DeltaR(lepton_momentum, jet->momentum()) > m_deltaRCut)
+    const GlobalVector jetAxis = refineJetAxis( jet, tracks, lepton );
+    const math::XYZVector axis( jetAxis.x(), jetAxis.y(), jetAxis.z());
+    if (DeltaR(lepton_momentum, axis) > m_deltaRCut)
       continue;
 
     reco::SoftLeptonProperties properties;
     properties.axisRefinement = m_refineJetAxis;
-    GlobalVector jetAxis = refineJetAxis( jet, tracks, lepton );
-    math::XYZVector axis( jetAxis.x(), jetAxis.y(), jetAxis.z());
    
     if (m_usePrimaryVertex) { 
       const reco::TransientTrack transientTrack = m_transientTrackBuilder->build(&lepton);
@@ -84,7 +87,7 @@ GlobalVector
 SoftLeptonAlgorithm::refineJetAxis (
     const edm::RefToBase<reco::Jet> & jet,
     const reco::TrackRefVector      & tracks,
-    const reco::TrackRef            & excluded /* = reco::TrackRef() */
+    const reco::TrackRef            & exclude /* = reco::TrackRef() */
 ) const {
   math::XYZVector axis = jet->momentum();
 
@@ -115,8 +118,8 @@ SoftLeptonAlgorithm::refineJetAxis (
     }
 
     // "remove" excluded track
-    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_AVERAGE_NOLEPTON and excluded.isNonnull()) {
-      const reco::Track & track = *excluded;
+    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_AVERAGE_NOLEPTON and exclude.isNonnull()) {
+      const reco::Track & track = *exclude;
 
       perp = track.pt();
       eta_rel = (double) track.eta() - axis.eta();
@@ -143,8 +146,8 @@ SoftLeptonAlgorithm::refineJetAxis (
     }
 
     // "remove" excluded track
-    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_SUM_NOLEPTON and excluded.isNonnull()) {
-      const reco::Track & track = *excluded;
+    if (m_refineJetAxis == reco::SoftLeptonProperties::AXIS_CHARGED_SUM_NOLEPTON and exclude.isNonnull()) {
+      const reco::Track & track = *exclude;
       sum -= track.momentum();
     }
 

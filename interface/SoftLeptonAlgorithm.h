@@ -19,6 +19,8 @@ public:
   SoftLeptonAlgorithm( void ) : 
     m_transientTrackBuilder( NULL ),
     m_refineJetAxis( reco::SoftLeptonProperties::AXIS_CALORIMETRIC ),
+    m_deltaRCut( 0.7 ),
+    m_chi2Cut( 0.0 ),
     m_usePrimaryVertex( true )
   {
   }
@@ -59,8 +61,8 @@ protected:
   // algorithm configuration
   unsigned int m_refineJetAxis;
   double       m_deltaRCut;
+  double       m_chi2Cut;
   bool         m_usePrimaryVertex; 
-    
 };
 
 #endif // RecoBTag_SoftLepton_SoftLeptonAlgorithm_h

@@ -5,7 +5,8 @@ module softElectronTagInfos = SoftLepton {
     InputTag primaryVertex  = offlinePrimaryVerticesFromCTFTracks
  
     PSet algorithmConfiguration = { 
-        double deltaRCut        = 0.4
+        double leptonChi2Cut    = 0.0       # no cut on lepton's track's chi2/ndof
+        double leptonDeltaRCut  = 0.4       # lepton distance from jet axis
         uint32 refineJetAxis    = 0         # use calorimetric jet direction by default
         bool   usePrimaryVertex = true      # use primary vertex to compute the impact parameter of the leptons
     }
