@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.21.2.2 2007/07/10 20:46:24 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.21.2.3 2007/07/11 00:05:41 fwyzard Exp $
 //
 
 
@@ -27,6 +27,7 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
+#include "FWCore/Framework/interface/View.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "../interface/findProductIDByLabel.h"      // to be migrated to framework
 
