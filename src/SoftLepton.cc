@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.21.2.3 2007/07/11 00:05:41 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.21.2.4 2007/07/11 20:07:43 fwyzard Exp $
 //
 
 
@@ -74,19 +74,21 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   // input objects
 
   // input jets
-  edm::ProductID jetsId;
+  edm::ProductID id_jets;
   std::vector<edm::RefToBase<reco::Jet> > jets;
   // look for a collection of reco::CaloJet
-  if (jetsId = edm::findProductIDByLabel<reco::CaloJetCollection>(iEvent, m_jets), jetsId.isValid()) {
+  if (id_jets = edm::findProductIDByLabel<reco::CaloJetCollection>(iEvent, m_jets), id_jets.isValid()) {
     Handle<edm::View<reco::Jet> > h_jets;
-    iEvent.get(jetsId, h_jets);
-    for (unsigned int i = 0; i < h_jets->size(); i++)
+    //iEvent.get(id_jets, h_jets);
+    iEvent.getByLabel(m_jets, h_jets);
+    for (unsigned int i = 0; i < h_jets->size(); i++) {
       jets.push_back( h_jets->refAt(i) );
+    }
   } else
   // look for a collection of reco::JetTracksAssociation
-  if (jetsId = edm::findProductIDByLabel<reco::JetTracksAssociationCollection>(iEvent, m_jets), jetsId.isValid()) {
+  if (id_jets = edm::findProductIDByLabel<reco::JetTracksAssociationCollection>(iEvent, m_jets), id_jets.isValid()) {
     Handle<reco::JetTracksAssociationCollection> h_jtas;
-    iEvent.get(jetsId, h_jtas);
+    iEvent.get(id_jets, h_jtas);
     for (unsigned int i = 0; i < h_jtas->size(); i++)
       jets.push_back( (*h_jtas)[i].first );
   } else {
@@ -110,13 +112,13 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   }
 
   // input leptons (can be of different types)
-  edm::ProductID leptonsId;
+  edm::ProductID id_leptons;
   reco::TrackRefVector leptons;
 
   // look for a collection of reco::Electron
-  if (leptonsId = edm::findProductIDByLabel<reco::ElectronCollection>(iEvent, m_leptons), leptonsId.isValid()) {
+  if (id_leptons = edm::findProductIDByLabel<reco::ElectronCollection>(iEvent, m_leptons), id_leptons.isValid()) {
     Handle<reco::ElectronCollection> h_electrons;
-    iEvent.get(leptonsId, h_electrons);
+    iEvent.get(id_leptons, h_electrons);
     #ifdef DEBUG
     cerr << "SoftLepton::produce : collection " << m_leptons << " found, identified as ElectronCollection" << endl;
     #endif
@@ -124,9 +126,9 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
       leptons.push_back(electron->track());
   } else
   // look for a collection of reco::Muon
-  if (leptonsId = edm::findProductIDByLabel<reco::MuonCollection>(iEvent, m_leptons), leptonsId.isValid()) {
+  if (id_leptons = edm::findProductIDByLabel<reco::MuonCollection>(iEvent, m_leptons), id_leptons.isValid()) {
     Handle<reco::MuonCollection> h_muons;
-    iEvent.get(leptonsId, h_muons);
+    iEvent.get(id_leptons, h_muons);
     #ifdef DEBUG
     cerr << "SoftLepton::produce : collection " << m_leptons << " found, identified as MuonCollection" << endl;
     #endif
@@ -137,9 +139,9 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
         cerr << "SoftLepton::produce : found a Null edm::Ref in MuonCollection " << m_leptons << ", skipping it" << endl;
   } else
   // look for a collection of reco::Tracks
-  if (leptonsId = edm::findProductIDByLabel<reco::TrackCollection>(iEvent, m_leptons), leptonsId.isValid()) {
+  if (id_leptons = edm::findProductIDByLabel<reco::TrackCollection>(iEvent, m_leptons), id_leptons.isValid()) {
     Handle<reco::TrackCollection> h_tracks;
-    iEvent.get(leptonsId, h_tracks);
+    iEvent.get(id_leptons, h_tracks);
     #ifdef DEBUG
     cerr << "SoftLepton::produce : collection " << m_leptons << " found, identified as TrackCollection" << endl;
     #endif
