@@ -137,8 +137,8 @@ testLeptonAssociator::testLeptonAssociator(edm::ParameterSet const& iConfig) {
   m_globalMuons     = iConfig.getParameter<edm::InputTag>( "globalMuonTracks" );
   m_muons           = iConfig.getParameter<edm::InputTag>( "muons" );
   m_trackingTruth   = iConfig.getParameter<edm::InputTag>( "trackingTruth" );
-  m_flavour         = iConfig.getParameter<unsigned int>(  "leptonFlavour" );
   m_ptcut           = iConfig.getParameter<double>(        "minPt" );
+  m_flavour         = 13;   // look for simulated muons
 }
 
 testLeptonAssociator::~testLeptonAssociator() {
