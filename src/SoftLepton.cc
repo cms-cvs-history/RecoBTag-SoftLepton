@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.21.2.5 2007/07/12 23:04:40 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.21.2.6 2007/07/13 15:36:47 fwyzard Exp $
 //
 
 
@@ -76,7 +76,7 @@ SoftLepton::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   // input jets
   edm::ProductID id_jets;
   std::vector<edm::RefToBase<reco::Jet> > jets;
-  // look for a collection of reco::CaloJet
+  // look for a collection of jets
   if (id_jets = edm::findProductIDByLabel<reco::CaloJetCollection>(iEvent, m_jets), id_jets.isValid()) {
     Handle<edm::View<reco::Jet> > h_jets;
     //iEvent.get(id_jets, h_jets);
