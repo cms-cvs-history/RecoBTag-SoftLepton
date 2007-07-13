@@ -13,7 +13,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.cc,v 1.21.2.4 2007/07/11 20:07:43 fwyzard Exp $
+// $Id: SoftLepton.cc,v 1.21.2.5 2007/07/12 23:04:40 fwyzard Exp $
 //
 
 
@@ -27,10 +27,10 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/Framework/interface/ESHandle.h"
-#include "FWCore/Framework/interface/View.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "../interface/findProductIDByLabel.h"      // to be migrated to framework
 
+#include "DataFormats/Common/interface/View.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/MuonReco/interface/Muon.h"
