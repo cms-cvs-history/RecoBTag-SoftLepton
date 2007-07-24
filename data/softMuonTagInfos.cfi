@@ -3,6 +3,7 @@ module softMuonTagInfos = SoftLepton {
     InputTag jets           = iterativeCone5CaloJets
     InputTag leptons        = globalMuons
     InputTag primaryVertex  = offlinePrimaryVerticesFromCTFTracks
+    double   leptonQuality  = 0.5
  
     PSet algorithmConfiguration = { 
         double deltaRCut        = 0.4
