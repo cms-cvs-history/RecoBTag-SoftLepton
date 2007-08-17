@@ -1,3 +1,4 @@
+<use name=RecoBTag/SoftLepton>
 <use name=DataFormats/TrackReco>
 <use name=FWCore/Framework>
 <use name=FWCore/PluginManager>
