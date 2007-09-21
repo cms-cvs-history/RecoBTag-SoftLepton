@@ -1,0 +1,4 @@
+module softElectronJetTags = JetTagProducer { 
+  InputTag tagInfo        = softElectronTagInfos
+  string   jetTagComputer = "softElectron"
+}
