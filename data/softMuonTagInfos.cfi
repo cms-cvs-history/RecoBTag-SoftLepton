@@ -1,10 +1,10 @@
 # SoftLeptonTagInfo producer for tagging caloJets with global muons 
 module softMuonTagInfos = SoftLepton {
-    InputTag jets            = iterativeCone5CaloJets
-    uint32   refineJetAxis   = 0            # use calorimetric jet direction by default
-    InputTag primaryVertex   = offlinePrimaryVerticesFromCTFTracks
-    InputTag leptons         = globalMuons
-    double   leptonDeltaRCut = 0.4          # lepton distance from jet axis
-    double   leptonChi2Cut   = 9999.        # no cut on lepton's track's chi2/ndof
-    double   leptonQuality   = 0.5
+    InputTag jets             = iterativeCone5CaloJets
+    uint32   refineJetAxis    = 0           # use calorimetric jet direction by default
+    InputTag primaryVertex    = offlinePrimaryVerticesFromCTFTracks
+    InputTag leptons          = globalMuons
+    double   leptonDeltaRCut  = 0.4         # lepton distance from jet axis
+    double   leptonChi2Cut    = 9999.       # no cut on lepton's track's chi2/ndof
+    double   leptonQualityCut = 0.5
 }
