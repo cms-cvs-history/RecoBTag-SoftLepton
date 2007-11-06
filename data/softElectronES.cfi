@@ -1,6 +1,3 @@
 es_module softElectron = ElectronTaggerESProducer {
-    string ComponentName = "softElectron"
-    
-    PSet JetTagComputerPSet = {
-    }
+    PSet JetTagComputerPSet = { }
 }

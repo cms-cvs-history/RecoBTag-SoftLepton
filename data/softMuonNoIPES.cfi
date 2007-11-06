@@ -1,6 +1,3 @@
 es_module softMuonNoIP = MuonTaggerNoIPESProducer {
-    string ComponentName = "softMuonNoIP"
-    
-    PSet JetTagComputerPSet = {
-    }
+    PSet JetTagComputerPSet = { }
 }

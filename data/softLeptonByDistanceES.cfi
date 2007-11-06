@@ -1,6 +1,4 @@
 es_module softLeptonByDistance = LeptonTaggerByDistanceESProducer {
-    string ComponentName = "softLeptonByDistance"
-    
     PSet JetTagComputerPSet = {
         double distance = 0.5
     }
