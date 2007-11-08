@@ -1,3 +1,2 @@
 es_module softElectron = ElectronTaggerESProducer {
-    PSet JetTagComputerPSet = { }
 }

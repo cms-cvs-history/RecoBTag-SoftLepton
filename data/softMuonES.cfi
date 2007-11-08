@@ -1,3 +1,2 @@
 es_module softMuon = MuonTaggerESProducer {
-    PSet JetTagComputerPSet = { }
 }

@@ -1,3 +1,2 @@
 es_module softMuonNoIP = MuonTaggerNoIPESProducer {
-    PSet JetTagComputerPSet = { }
 }

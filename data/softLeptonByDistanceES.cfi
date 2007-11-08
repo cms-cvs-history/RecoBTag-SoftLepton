@@ -1,5 +1,3 @@
 es_module softLeptonByDistance = LeptonTaggerByDistanceESProducer {
-    PSet JetTagComputerPSet = {
-        double distance = 0.5
-    }
+    double distance = 0.5
 }
