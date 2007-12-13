@@ -1,4 +1,4 @@
-module softLeptonByPtBJetTags = LeptonByPtTaggerESProducer { 
+module softLeptonByIP3dBJetTags = LeptonByPtTaggerESProducer { 
   InputTag tagInfo        = softMuonTagInfos
   string   jetTagComputer = "softLeptonByIP3d"
 }
