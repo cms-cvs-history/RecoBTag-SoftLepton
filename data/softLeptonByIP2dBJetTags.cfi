@@ -1,4 +1,4 @@
 module softLeptonByIP2dBJetTags = JetTagProducer { 
-  InputTag tagInfo        = softMuonTagInfos
+  InputTag tagInfo        = softLeptonTagInfos
   string   jetTagComputer = "softLeptonByIP2d"
 }
