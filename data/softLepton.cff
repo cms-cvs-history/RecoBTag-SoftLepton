@@ -2,7 +2,6 @@ include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cfi"
 include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
 include "Geometry/CaloEventSetup/data/CaloTopology.cfi"
-include "Geometry/MuonNumbering/data/muonNumberingInitialization.cfi"
 include "TrackingTools/TransientTrack/data/TransientTrackBuilder.cfi"
 
 include "RecoBTau/JetTagComputer/data/jetTagRecord.cfi"
@@ -17,3 +16,9 @@ include "RecoBTag/SoftLepton/data/softMuonES.cfi"
 include "RecoBTag/SoftLepton/data/softMuonBJetTags.cfi"
 include "RecoBTag/SoftLepton/data/softMuonNoIPES.cfi"
 include "RecoBTag/SoftLepton/data/softMuonNoIPBJetTags.cfi"
+
+include "RecoBTag/SoftLepton/data/softLeptonByPtES.cfi"
+module  softMuonByPtBJetTags = softLeptonByPtBJetTags from "RecoBTag/SoftLepton/data/softLeptonByPtBJetTags.cfi"
+replace softMuonByPtBJetTags.tagInfo = softMuonTagInfos
+module  softElectronByPtBJetTags = softLeptonByPtBJetTags from "RecoBTag/SoftLepton/data/softLeptonByPtBJetTags.cfi"
+replace softElectronByPtBJetTags.tagInfo = softElectronTagInfos

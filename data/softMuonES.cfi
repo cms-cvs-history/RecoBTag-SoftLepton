@@ -1,6 +1,2 @@
 es_module softMuon = MuonTaggerESProducer {
-    string ComponentName = "softMuon"
-    
-    PSet JetTagComputerPSet = {
-    }
 }

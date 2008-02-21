@@ -1,0 +1,3 @@
+es_module softLeptonByIP2d = LeptonTaggerByIPESProducer {
+  bool use3d = false
+}
