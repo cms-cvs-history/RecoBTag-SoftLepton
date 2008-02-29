@@ -1,6 +1,6 @@
 # identify electrons from the ECAL energy deposits associate to the tracks
 module btagSoftElectrons = SoftElectronProducer {
-    InputTag TrackTag = ctfWithMaterialTracks
+    InputTag TrackTag = generalTracks 
     InputTag HBHERecHitTag = hbhereco
     InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
     InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
