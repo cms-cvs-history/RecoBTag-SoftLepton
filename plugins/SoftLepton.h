@@ -16,7 +16,7 @@
 //
 // Original Author:  fwyzard
 //         Created:  Wed Oct 18 18:02:07 CEST 2006
-// $Id: SoftLepton.h,v 1.2 2007/10/08 16:16:47 fwyzard Exp $
+// $Id: SoftLepton.h,v 1.3 2008/03/03 10:52:27 fwyzard Exp $
 //
 
 // system include files
@@ -65,6 +65,11 @@ protected:
       const math::XYZVector& axis
   );
 
+  static double boostedPPar(
+      const math::XYZVector& vector,
+      const math::XYZVector& axis
+  );
+  
 private:
   virtual void beginJob(const edm::EventSetup& iSetup);
   virtual void produce(edm::Event& iEvent, const edm::EventSetup& iSetup);
