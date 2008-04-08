@@ -1,10 +1,11 @@
 # identify electrons from the ECAL energy deposits associate to the tracks
+include "TrackingTools/TrackAssociator/data/default.cfi"
 module btagSoftElectrons = SoftElectronProducer {
     InputTag TrackTag = generalTracks 
     InputTag HBHERecHitTag = hbhereco
     InputTag BasicClusterTag = islandBasicClusters:islandBarrelBasicClusters
     InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
-    include "TrackingTools/TrackAssociator/data/default.cfi"
+    using TrackAssociatorParameterBlock
 
     double HOverEConeSize = 0.3
     double DiscriminatorCut = 0.9
