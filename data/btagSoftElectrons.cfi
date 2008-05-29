@@ -3,7 +3,7 @@ include "TrackingTools/TrackAssociator/data/default.cfi"
 module btagSoftElectrons = SoftElectronProducer {
     InputTag TrackTag = generalTracks 
     InputTag HBHERecHitTag = hbhereco
-    InputTag BasicClusterTag = hybridSuperClusters 
+    InputTag BasicClusterTag = hybridSuperClusters:hybridBarrelBasicClusters 
 #    InputTag BasicClusterShapeTag = islandBasicClusters:islandBarrelShape
     using TrackAssociatorParameterBlock
     InputTag BarrelRecHitCollection = reducedEcalRecHitsEB
