@@ -8,6 +8,7 @@
 <use name=SimTracker/Records>
 <use name=SimTracker/TrackAssociation>
 <use name=boost>
+<flags CXXFLAGS="-g -O1">
 
 <library file="testLeptonAssociator.cc" name=testLeptonAssociator>
   <flags EDM_PLUGIN=1>
