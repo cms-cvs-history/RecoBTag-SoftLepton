@@ -1,3 +1,0 @@
-es_module softLeptonByDistance = LeptonTaggerByDistanceESProducer {
-    double distance = 0.5
-}
