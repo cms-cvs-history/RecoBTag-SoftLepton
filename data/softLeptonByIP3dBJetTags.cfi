@@ -1,4 +1,0 @@
-module softLeptonByIP3dBJetTags = JetTagProducer { 
-  VInputTag tagInfos       = { softLeptonTagInfos }
-  string    jetTagComputer = "softLeptonByIP3d"
-}
