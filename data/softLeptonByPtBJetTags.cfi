@@ -1,4 +1,0 @@
-module softLeptonByPtBJetTags = JetTagProducer { 
-  VInputTag tagInfos       = { softLeptonTagInfos }
-  string    jetTagComputer = "softLeptonByPt"
-}
