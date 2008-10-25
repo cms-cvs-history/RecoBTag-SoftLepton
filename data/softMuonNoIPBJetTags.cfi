@@ -1,4 +1,0 @@
-module softMuonNoIPBJetTags = JetTagProducer { 
-  VInputTag tagInfos       = { softMuonTagInfos }
-  string    jetTagComputer = "softMuonNoIP"
-}
