@@ -1,4 +1,0 @@
-module softElectronBJetTags = JetTagProducer { 
-  VInputTag tagInfos       = { softElectronTagInfos }
-  string    jetTagComputer = "softElectron"
-}
